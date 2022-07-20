@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/CategoryAdd.dart';
+import '../widgets/CategoryCreate.dart';
 import 'package:provider/provider.dart';
 import '../models/category.dart';
-import '../widgets/CategoryEdit.dart';
+import '../widgets/CategoryUpdate.dart';
 import '../providers/CategoryProvider.dart';
 
 class Categories extends StatefulWidget {
@@ -26,7 +26,7 @@ class _CategoriesState extends State<Categories> {
         itemBuilder: (context, index) {
           Category category = categories[index];
           return ListTile(
-            title: Text(category.name),
+            title: Text(category.type),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
               IconButton(
                 icon: Icon(Icons.edit),

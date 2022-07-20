@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/CategoryAdd.dart';
+import '../widgets/CategoryCreate.dart';
 import 'package:provider/provider.dart';
 import '../models/category.dart';
-import '../widgets/CategoryEdit.dart';
+import '../widgets/CategoryUpdate.dart';
 import '../providers/CategoryProvider.dart';
 
 class Categories extends StatefulWidget {
