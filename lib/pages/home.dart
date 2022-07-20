@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../providers/AuthProvider.dart';
 import '../pages/categories.dart';
-import '../pages/transactions.dart';
+import '../pages/recipes.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -11,7 +11,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int selectedIndex = 0;
-  List<Widget> widgetOptions = [Transactions(), Categories()];
+  List<Widget> widgetOptions = [Recipes(), Categories()];
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +27,7 @@ class _HomeState extends State<Home> {
             elevation: 0,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.account_balance_wallet),
-                  label: 'Transactions'),
+                  icon: Icon(Icons.account_balance_wallet), label: 'Recipes'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.category), label: 'Categories'),
               BottomNavigationBarItem(

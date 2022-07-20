@@ -1,4 +1,4 @@
-import '../models/transaction.dart';
+import '../models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 import '../providers/CategoryProvider.dart';
 
 class TransactionEdit extends StatefulWidget {
-  final Transaction transaction;
+  final Recipe recipe;
   final Function transactionCallback;
 
-  TransactionEdit(this.transaction, this.transactionCallback, {Key? key})
+  TransactionEdit(this.recipe, this.transactionCallback, {Key? key})
       : super(key: key);
 
   @override
@@ -27,13 +27,11 @@ class _TransactionEditState extends State<TransactionEdit> {
 
   @override
   void initState() {
-    transactionAmountController.text = widget.transaction.amount.toString();
-    transactionCategoryController.text =
-        widget.transaction.categoryId.toString();
+    transactionAmountController.text = widget.recipe.amount.toString();
+    transactionCategoryController.text = widget.recipe.categoryId.toString();
     transactionDescriptionController.text =
-        widget.transaction.description.toString();
-    transactionDateController.text =
-        widget.transaction.transactionDate.toString();
+        widget.recipe.description.toString();
+    transactionDateController.text = widget.recipe.transactionDate.toString();
     super.initState();
   }
 
@@ -93,7 +91,7 @@ class _TransactionEditState extends State<TransactionEdit> {
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Transaction date',
+                  labelText: 'Recipe date',
                 ),
                 validator: (value) {
                   if (value!.trim().isEmpty) {
@@ -179,13 +177,12 @@ class _TransactionEditState extends State<TransactionEdit> {
       return;
     }
 
-    widget.transaction.amount = transactionAmountController.text;
-    widget.transaction.categoryId =
-        int.parse(transactionCategoryController.text);
-    widget.transaction.description = transactionDescriptionController.text;
-    widget.transaction.transactionDate = transactionDateController.text;
+    widget.recipe.amount = transactionAmountController.text;
+    widget.recipe.categoryId = int.parse(transactionCategoryController.text);
+    widget.recipe.description = transactionDescriptionController.text;
+    widget.recipe.transactionDate = transactionDateController.text;
 
-    await widget.transactionCallback(widget.transaction);
+    await widget.transactionCallback(widget.recipe);
     Navigator.pop(context);
   }
 }

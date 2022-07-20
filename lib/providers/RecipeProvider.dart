@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/transaction.dart';
+import '../models/recipe.dart';
 import '../providers/AuthProvider.dart';
 import '../services/api.dart';
 
 class TransactionProvider extends ChangeNotifier {
-  List<Transaction> transactions = [];
+  List<Recipe> recipes = [];
   late ApiService apiService;
   late AuthProvider authProvider;
 
@@ -16,16 +16,16 @@ class TransactionProvider extends ChangeNotifier {
   }
 
   Future init() async {
-    transactions = await apiService.fetchTransactions();
+    recipes = await apiService.fetchTransactions();
     notifyListeners();
   }
 
   Future<void> addTransaction(
       String amount, String category, String description, String date) async {
     try {
-      Transaction addedTransaction =
+      Recipe addedTransaction =
           await apiService.addTransaction(amount, category, description, date);
-      transactions.add(addedTransaction);
+      recipes.add(addedTransaction);
 
       notifyListeners();
     } catch (Exception) {
@@ -33,12 +33,11 @@ class TransactionProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateTransaction(Transaction transaction) async {
+  Future<void> updateTransaction(Recipe recipe) async {
     try {
-      Transaction updatedTransaction =
-          await apiService.updateTransaction(transaction);
-      int index = transactions.indexOf(transaction);
-      transactions[index] = updatedTransaction;
+      Recipe updatedTransaction = await apiService.updateTransaction(recipe);
+      int index = recipes.indexOf(recipe);
+      recipes[index] = updatedTransaction;
 
       notifyListeners();
     } catch (Exception) {
@@ -46,11 +45,11 @@ class TransactionProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteTransaction(Transaction transaction) async {
+  Future<void> deleteTransaction(Recipe recipe) async {
     try {
-      await apiService.deleteTransaction(transaction.id);
+      await apiService.deleteTransaction(recipe.id);
 
-      transactions.remove(transaction);
+      recipes.remove(recipe);
       notifyListeners();
     } catch (Exception) {
       await authProvider.logOut();

@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
-import '../models/transaction.dart';
-import '../widgets/TransactionAdd.dart';
-import '../widgets/TransactionsEdit.dart';
+import '../models/recipe.dart';
+import '../widgets/RecipeAdd.dart';
+import '../widgets/RecipeEdit.dart';
 import 'package:provider/provider.dart';
-import '../providers/TransactionProvider.dart';
+import '../providers/RecipeProvider.dart';
 
-class Transactions extends StatefulWidget {
+class Recipes extends StatefulWidget {
   @override
   _TransactionsState createState() => _TransactionsState();
 }
 
-class _TransactionsState extends State<Transactions> {
+class _TransactionsState extends State<Recipes> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<TransactionProvider>(context);
-    List<Transaction> transactions = provider.transactions;
+    List<Recipe> recipes = provider.recipes;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transactions'),
+        title: Text('Recipes'),
         backgroundColor: Color(0xFFEE8B60),
       ),
       body: ListView.builder(
-        itemCount: transactions.length,
+        itemCount: recipes.length,
         itemBuilder: (context, index) {
-          Transaction transaction = transactions[index];
+          Recipe recipe = recipes[index];
           return ListTile(
-            title: Text('\$' + transaction.amount),
-            subtitle: Text(transaction.categoryName),
+            title: Text('\$' + recipe.amount),
+            subtitle: Text(recipe.categoryName),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(transaction.transactionDate),
-                Text(transaction.description),
+                Text(recipe.transactionDate),
+                Text(recipe.description),
               ]),
               IconButton(
                 color: Color(0xFFEE8B60),
@@ -42,7 +42,7 @@ class _TransactionsState extends State<Transactions> {
                       context: context,
                       builder: (BuildContext context) {
                         return TransactionEdit(
-                            transaction, provider.updateTransaction);
+                            recipe, provider.updateTransaction);
                       });
                 },
               ),
@@ -66,7 +66,7 @@ class _TransactionsState extends State<Transactions> {
                                 child: Text("Supprimer"),
                                 onPressed: () => deleteTransaction(
                                     provider.deleteTransaction,
-                                    transaction,
+                                    recipe,
                                     context)),
                           ],
                         );
@@ -92,8 +92,8 @@ class _TransactionsState extends State<Transactions> {
   }
 
   Future deleteTransaction(
-      Function callback, Transaction transaction, BuildContext context) async {
-    await callback(transaction);
+      Function callback, Recipe recipe, BuildContext context) async {
+    await callback(recipe);
     Navigator.pop(context);
   }
 }

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import '../models/category.dart';
-import '../models/transaction.dart';
+import '../models/recipe.dart';
 
 class ApiService {
   late String token;
@@ -79,25 +79,23 @@ class ApiService {
     }
   }
 
-  Future<List<Transaction>> fetchTransactions() async {
+  Future<List<Recipe>> fetchTransactions() async {
     http.Response response = await http.get(
-      Uri.parse(baseUrl + 'transactions'),
+      Uri.parse(baseUrl + 'recipes'),
       headers: {
         HttpHeaders.acceptHeader: 'application/json',
         HttpHeaders.authorizationHeader: 'Bearer $token'
       },
     );
 
-    List transactions = jsonDecode(response.body);
+    List recipes = jsonDecode(response.body);
 
-    return transactions
-        .map((transaction) => Transaction.fromJson(transaction))
-        .toList();
+    return recipes.map((recipe) => Recipe.fromJson(recipe)).toList();
   }
 
-  Future<Transaction> addTransaction(
+  Future<Recipe> addTransaction(
       String amount, String category, String description, String date) async {
-    String uri = baseUrl + 'transactions';
+    String uri = baseUrl + 'recipes';
 
     http.Response response = await http.post(Uri.parse(uri),
         headers: {
@@ -116,11 +114,11 @@ class ApiService {
       throw Exception('Error happened on create');
     }
 
-    return Transaction.fromJson(jsonDecode(response.body));
+    return Recipe.fromJson(jsonDecode(response.body));
   }
 
-  Future<Transaction> updateTransaction(Transaction transaction) async {
-    String uri = baseUrl + 'transactions/' + transaction.id.toString();
+  Future<Recipe> updateTransaction(Recipe recipe) async {
+    String uri = baseUrl + 'recipes/' + recipe.id.toString();
 
     http.Response response = await http.put(Uri.parse(uri),
         headers: {
@@ -129,21 +127,21 @@ class ApiService {
           HttpHeaders.authorizationHeader: 'Bearer $token'
         },
         body: jsonEncode({
-          'amount': transaction.amount,
-          'category_id': transaction.categoryId,
-          'description': transaction.description,
-          'transaction_date': transaction.transactionDate
+          'amount': recipe.amount,
+          'category_id': recipe.categoryId,
+          'description': recipe.description,
+          'transaction_date': recipe.transactionDate
         }));
 
     if (response.statusCode != 200) {
       throw Exception('Error happened on update');
     }
 
-    return Transaction.fromJson(jsonDecode(response.body));
+    return Recipe.fromJson(jsonDecode(response.body));
   }
 
   Future<void> deleteTransaction(id) async {
-    String uri = baseUrl + 'transactions/' + id.toString();
+    String uri = baseUrl + 'recipes/' + id.toString();
     http.Response response = await http.delete(
       Uri.parse(uri),
       headers: {

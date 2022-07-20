@@ -78,7 +78,7 @@ class _TransactionAddState extends State<TransactionAdd> {
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Transaction date',
+                  labelText: 'Recipe date',
                 ),
                 validator: (value) {
                   if (value!.trim().isEmpty) {
