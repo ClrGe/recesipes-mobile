@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import '../models/recipe.dart';
-import '../widgets/RecipeAdd.dart';
-import '../widgets/RecipeEdit.dart';
+import '../widgets/RecipeCreate.dart';
+import '../widgets/RecipeUpdate.dart';
 import 'package:provider/provider.dart';
 import '../providers/RecipeProvider.dart';
 
 class Recipes extends StatefulWidget {
   @override
-  _TransactionsState createState() => _TransactionsState();
+  _RecipesState createState() => _RecipesState();
 }
 
-class _TransactionsState extends State<Recipes> {
+class _RecipesState extends State<Recipes> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<TransactionProvider>(context);
+    final provider = Provider.of<RecipeProvider>(context);
     List<Recipe> recipes = provider.recipes;
 
     return Scaffold(
@@ -26,11 +26,10 @@ class _TransactionsState extends State<Recipes> {
         itemBuilder: (context, index) {
           Recipe recipe = recipes[index];
           return ListTile(
-            title: Text('\$' + recipe.amount),
-            subtitle: Text(recipe.categoryName),
+            title: Text('\$' + recipe.name),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(recipe.transactionDate),
+                Text(recipe.publishedTime),
                 Text(recipe.description),
               ]),
               IconButton(
@@ -41,8 +40,7 @@ class _TransactionsState extends State<Recipes> {
                       isScrollControlled: true,
                       context: context,
                       builder: (BuildContext context) {
-                        return TransactionEdit(
-                            recipe, provider.updateTransaction);
+                        return RecipeEdit(recipe, provider.updateRecipe);
                       });
                 },
               ),
@@ -64,10 +62,8 @@ class _TransactionsState extends State<Recipes> {
                             ),
                             TextButton(
                                 child: Text("Supprimer"),
-                                onPressed: () => deleteTransaction(
-                                    provider.deleteTransaction,
-                                    recipe,
-                                    context)),
+                                onPressed: () => deleteRecipe(
+                                    provider.deleteRecipe, recipe, context)),
                           ],
                         );
                       });
@@ -83,7 +79,7 @@ class _TransactionsState extends State<Recipes> {
                 isScrollControlled: true,
                 context: context,
                 builder: (BuildContext context) {
-                  return TransactionAdd(provider.addTransaction);
+                  return RecipeAdd(provider.addRecipe);
                 });
           },
           backgroundColor: Color(0xFFEE8B60),
@@ -91,7 +87,7 @@ class _TransactionsState extends State<Recipes> {
     );
   }
 
-  Future deleteTransaction(
+  Future deleteRecipe(
       Function callback, Recipe recipe, BuildContext context) async {
     await callback(recipe);
     Navigator.pop(context);

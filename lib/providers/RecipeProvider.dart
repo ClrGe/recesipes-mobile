@@ -3,12 +3,12 @@ import '../models/recipe.dart';
 import '../providers/AuthProvider.dart';
 import '../services/api.dart';
 
-class TransactionProvider extends ChangeNotifier {
+class RecipeProvider extends ChangeNotifier {
   List<Recipe> recipes = [];
   late ApiService apiService;
   late AuthProvider authProvider;
 
-  TransactionProvider(AuthProvider authProvider) {
+  RecipeProvider(AuthProvider authProvider) {
     this.authProvider = authProvider;
     this.apiService = ApiService(authProvider.token);
 
@@ -16,16 +16,16 @@ class TransactionProvider extends ChangeNotifier {
   }
 
   Future init() async {
-    recipes = await apiService.fetchTransactions();
+    recipes = await apiService.fetchRecipes();
     notifyListeners();
   }
 
-  Future<void> addTransaction(
+  Future<void> addRecipe(
       String amount, String category, String description, String date) async {
     try {
-      Recipe addedTransaction =
-          await apiService.addTransaction(amount, category, description, date);
-      recipes.add(addedTransaction);
+      Recipe addedRecipe =
+          await apiService.addRecipe(amount, category, description, date);
+      recipes.add(addedRecipe);
 
       notifyListeners();
     } catch (Exception) {
@@ -33,11 +33,11 @@ class TransactionProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateTransaction(Recipe recipe) async {
+  Future<void> updateRecipe(Recipe recipe) async {
     try {
-      Recipe updatedTransaction = await apiService.updateTransaction(recipe);
+      Recipe updatedRecipe = await apiService.updateRecipe(recipe);
       int index = recipes.indexOf(recipe);
-      recipes[index] = updatedTransaction;
+      recipes[index] = updatedRecipe;
 
       notifyListeners();
     } catch (Exception) {
@@ -45,9 +45,9 @@ class TransactionProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteTransaction(Recipe recipe) async {
+  Future<void> deleteRecipe(Recipe recipe) async {
     try {
-      await apiService.deleteTransaction(recipe.id);
+      await apiService.deleteRecipe(recipe.id);
 
       recipes.remove(recipe);
       notifyListeners();

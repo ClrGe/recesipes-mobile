@@ -19,7 +19,7 @@ class _CategoryEditState extends State<CategoryEdit> {
 
   @override
   void initState() {
-    categoryNameController.text = widget.category.name;
+    categoryNameController.text = widget.category.type;
     super.initState();
   }
 
@@ -34,7 +34,7 @@ class _CategoryEditState extends State<CategoryEdit> {
                 controller: categoryNameController,
                 validator: (String? value) {
                   if (value!.isEmpty) {
-                    return 'Enter category name';
+                    return 'Renseignez le nom de catégorie';
                   }
 
                   return null;
@@ -42,19 +42,19 @@ class _CategoryEditState extends State<CategoryEdit> {
                 onChanged: (text) => setState(() => errorMessage = ''),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Category name',
+                  labelText: 'Nom de la catégorie',
                 ),
               ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     ElevatedButton(
-                      child: Text('Save'),
+                      child: Text('Enregistrer'),
                       onPressed: () => saveCategory(context),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: Colors.red),
-                      child: Text('Cancel'),
+                      child: Text('Annuler'),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ]),
@@ -69,7 +69,7 @@ class _CategoryEditState extends State<CategoryEdit> {
       return;
     }
 
-    widget.category.name = categoryNameController.text;
+    widget.category.type = categoryNameController.text;
 
     await widget.categoryCallback(widget.category);
     Navigator.pop(context);

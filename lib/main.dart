@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'providers/AuthProvider.dart';
 import 'providers/CategoryProvider.dart';
-import 'providers/TransactionProvider.dart';
+import 'providers/RecipeProvider.dart';
 import 'pages/categories.dart';
 import 'pages/home.dart';
 import 'pages/login.dart';
@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
               providers: [
                 ChangeNotifierProvider<CategoryProvider>(
                     create: (context) => CategoryProvider(authProvider)),
-                ChangeNotifierProvider<TransactionProvider>(
-                    create: (context) => TransactionProvider(authProvider))
+                ChangeNotifierProvider<RecipeProvider>(
+                    create: (context) => RecipeProvider(authProvider))
               ],
               child: MaterialApp(title: 'Bienvenue sur reCESIpes', routes: {
                 '/': (context) {

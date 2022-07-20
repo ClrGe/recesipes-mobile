@@ -25,7 +25,7 @@ class _CategoryAddState extends State<CategoryAdd> {
                 controller: categoryNameController,
                 validator: (String? value) {
                   if (value!.isEmpty) {
-                    return 'Enter category name';
+                    return 'Renseignez le nom de catégorie';
                   }
 
                   return null;
@@ -33,19 +33,19 @@ class _CategoryAddState extends State<CategoryAdd> {
                 onChanged: (text) => setState(() => errorMessage = ''),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Category name',
+                  labelText: 'Nom de la catégorie',
                 ),
               ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     ElevatedButton(
-                      child: Text('Save'),
+                      child: Text('Enregistrer'),
                       onPressed: () => saveCategory(context),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: Colors.red),
-                      child: Text('Cancel'),
+                      child: Text('Annuler'),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ]),

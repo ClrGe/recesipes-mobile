@@ -5,21 +5,21 @@ import '../models/category.dart';
 import 'package:provider/provider.dart';
 import '../providers/CategoryProvider.dart';
 
-class TransactionAdd extends StatefulWidget {
-  final Function transactionCallback;
+class RecipeAdd extends StatefulWidget {
+  final Function recipeCallback;
 
-  TransactionAdd(this.transactionCallback, {Key? key}) : super(key: key);
+  RecipeAdd(this.recipeCallback, {Key? key}) : super(key: key);
 
   @override
-  _TransactionAddState createState() => _TransactionAddState();
+  _RecipeAddState createState() => _RecipeAddState();
 }
 
-class _TransactionAddState extends State<TransactionAdd> {
+class _RecipeAddState extends State<RecipeAdd> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final transactionAmountController = TextEditingController();
-  final transactionCategoryController = TextEditingController();
-  final transactionDescriptionController = TextEditingController();
-  final transactionDateController = TextEditingController();
+  final recipeAmountController = TextEditingController();
+  final recipeCategoryController = TextEditingController();
+  final recipeDescriptionController = TextEditingController();
+  final recipeDateController = TextEditingController();
   String errorMessage = '';
 
   @override
@@ -30,7 +30,7 @@ class _TransactionAddState extends State<TransactionAdd> {
             key: _formKey,
             child: Column(children: <Widget>[
               TextFormField(
-                controller: transactionAmountController,
+                controller: recipeAmountController,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
                       RegExp(r'^-?(\d+\.?\d{0,2})?')),
@@ -39,32 +39,32 @@ class _TransactionAddState extends State<TransactionAdd> {
                     signed: true, decimal: true),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Amount',
+                  labelText: 'Nombre invités',
                   icon: Icon(Icons.attach_money),
                   hintText: '0',
                 ),
                 validator: (value) {
                   if (value!.trim().isEmpty) {
-                    return 'Amount is required';
+                    return 'Nombre invités';
                   }
                   final newValue = double.tryParse(value);
 
                   if (newValue == null) {
-                    return 'Invalid amount format';
+                    return 'Format invalide';
                   }
                 },
                 onChanged: (text) => setState(() => errorMessage = ''),
               ),
               buildCategoriesDropdown(),
               TextFormField(
-                controller: transactionDescriptionController,
+                controller: recipeDescriptionController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Description',
                 ),
                 validator: (value) {
                   if (value!.trim().isEmpty) {
-                    return 'Description is required';
+                    return 'Fournir une description';
                   }
 
                   return null;
@@ -72,13 +72,13 @@ class _TransactionAddState extends State<TransactionAdd> {
                 onChanged: (text) => setState(() => errorMessage = ''),
               ),
               TextFormField(
-                controller: transactionDateController,
+                controller: recipeDateController,
                 onTap: () {
                   selectDate(context);
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Recipe date',
+                  labelText: 'Publication date',
                 ),
                 validator: (value) {
                   if (value!.trim().isEmpty) {
@@ -93,12 +93,12 @@ class _TransactionAddState extends State<TransactionAdd> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     ElevatedButton(
-                      child: Text('Save'),
-                      onPressed: () => saveTransaction(context),
+                      child: Text('Enregister'),
+                      onPressed: () => saveRecipe(context),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: Colors.red),
-                      child: Text('Cancel'),
+                      child: Text('Annuler'),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ]),
@@ -114,8 +114,7 @@ class _TransactionAddState extends State<TransactionAdd> {
         lastDate: DateTime(DateTime.now().year + 5));
     if (picked != null)
       setState(() {
-        transactionDateController.text =
-            DateFormat('MM/dd/yyyy').format(picked);
+        recipeDateController.text = DateFormat('MM/dd/yyyy').format(picked);
       });
   }
 
@@ -129,7 +128,7 @@ class _TransactionAddState extends State<TransactionAdd> {
           items: categories.map<DropdownMenuItem<String>>((e) {
             return DropdownMenuItem<String>(
                 value: e.id.toString(),
-                child: Text(e.name,
+                child: Text(e.type,
                     style: TextStyle(color: Colors.black, fontSize: 20.0)));
           }).toList(),
           onChanged: (String? newValue) {
@@ -138,17 +137,17 @@ class _TransactionAddState extends State<TransactionAdd> {
             }
 
             setState(() {
-              transactionCategoryController.text = newValue.toString();
+              recipeCategoryController.text = newValue.toString();
             });
           },
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText: 'Category',
+            labelText: 'Catégorie',
           ),
           dropdownColor: Colors.white,
           validator: (value) {
             if (value == null) {
-              return 'Please select category';
+              return 'Choississez une catégorie';
             }
           },
         );
@@ -156,18 +155,18 @@ class _TransactionAddState extends State<TransactionAdd> {
     );
   }
 
-  Future saveTransaction(context) async {
+  Future saveRecipe(context) async {
     final form = _formKey.currentState;
 
     if (!form!.validate()) {
       return;
     }
 
-    await widget.transactionCallback(
-        transactionAmountController.text,
-        transactionCategoryController.text,
-        transactionDescriptionController.text,
-        transactionDateController.text);
+    await widget.recipeCallback(
+        recipeAmountController.text,
+        recipeCategoryController.text,
+        recipeDescriptionController.text,
+        recipeDateController.text);
     Navigator.pop(context);
   }
 }

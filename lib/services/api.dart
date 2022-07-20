@@ -55,7 +55,7 @@ class ApiService {
           HttpHeaders.acceptHeader: 'application/json',
           HttpHeaders.authorizationHeader: 'Bearer $token'
         },
-        body: jsonEncode({'name': category.name}));
+        body: jsonEncode({'name': category.type}));
 
     if (response.statusCode != 200) {
       throw Exception('Error happened on update');
@@ -79,7 +79,7 @@ class ApiService {
     }
   }
 
-  Future<List<Recipe>> fetchTransactions() async {
+  Future<List<Recipe>> fetchRecipes() async {
     http.Response response = await http.get(
       Uri.parse(baseUrl + 'recipes'),
       headers: {
@@ -93,7 +93,7 @@ class ApiService {
     return recipes.map((recipe) => Recipe.fromJson(recipe)).toList();
   }
 
-  Future<Recipe> addTransaction(
+  Future<Recipe> addRecipe(
       String amount, String category, String description, String date) async {
     String uri = baseUrl + 'recipes';
 
@@ -107,7 +107,7 @@ class ApiService {
           'amount': amount,
           'category_id': category,
           'description': description,
-          'transaction_date': date
+          'recipe_date': date
         }));
 
     if (response.statusCode != 201) {
@@ -117,7 +117,7 @@ class ApiService {
     return Recipe.fromJson(jsonDecode(response.body));
   }
 
-  Future<Recipe> updateTransaction(Recipe recipe) async {
+  Future<Recipe> updateRecipe(Recipe recipe) async {
     String uri = baseUrl + 'recipes/' + recipe.id.toString();
 
     http.Response response = await http.put(Uri.parse(uri),
@@ -127,10 +127,9 @@ class ApiService {
           HttpHeaders.authorizationHeader: 'Bearer $token'
         },
         body: jsonEncode({
-          'amount': recipe.amount,
           'category_id': recipe.categoryId,
           'description': recipe.description,
-          'transaction_date': recipe.transactionDate
+          'recipe_date': recipe.publishedTime
         }));
 
     if (response.statusCode != 200) {
@@ -140,7 +139,7 @@ class ApiService {
     return Recipe.fromJson(jsonDecode(response.body));
   }
 
-  Future<void> deleteTransaction(id) async {
+  Future<void> deleteRecipe(id) async {
     String uri = baseUrl + 'recipes/' + id.toString();
     http.Response response = await http.delete(
       Uri.parse(uri),
