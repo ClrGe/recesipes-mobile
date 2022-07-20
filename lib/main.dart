@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'providers/AuthProvider.dart';
 import 'providers/CategoryProvider.dart';
 import 'providers/TransactionProvider.dart';
-import 'screens/categories.dart';
-import 'screens/home.dart';
-import 'screens/login.dart';
-import 'screens/register.dart';
+import 'pages/categories.dart';
+import 'pages/home.dart';
+import 'pages/login.dart';
+import 'pages/register.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());

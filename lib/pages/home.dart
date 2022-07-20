@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../providers/AuthProvider.dart';
-import '../screens/categories.dart';
-import '../screens/transactions.dart';
+import '../pages/categories.dart';
+import '../pages/transactions.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {

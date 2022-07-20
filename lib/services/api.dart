@@ -12,7 +12,7 @@ class ApiService {
     this.token = token;
   }
 
-  final String baseUrl = 'http://flutter-api.laraveldaily.com/api/';
+  final String baseUrl = '';
 
   Future<List<Category>> fetchCategories() async {
     http.Response response = await http.get(
