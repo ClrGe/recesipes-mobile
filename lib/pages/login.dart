@@ -30,7 +30,9 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Connexion'),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text('reCESIpes'),
         backgroundColor: Color(0xFFEE8B60),
       ),
       body: Container(
@@ -48,6 +50,12 @@ class _LoginState extends State<Login> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
+                      Image.asset(
+                        'assets/images/logo_cube_web_mobile.png',
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         controller: emailController,

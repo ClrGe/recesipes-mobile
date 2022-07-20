@@ -1,53 +1,53 @@
 import 'package:flutter/material.dart';
-import '../models/recipe.dart';
-import '../widgets/RecipeCreate.dart';
-import '../widgets/RecipeUpdate.dart';
+import '../widgets/CategoryCreate.dart';
 import 'package:provider/provider.dart';
-import '../providers/RecipeProvider.dart';
+import '../models/category.dart';
+import '../widgets/CategoryUpdate.dart';
+import '../providers/CategoryProvider.dart';
 
-class Recipes extends StatefulWidget {
+class Categories extends StatefulWidget {
   @override
-  _RecipesState createState() => _RecipesState();
+  _CategoriesState createState() => _CategoriesState();
 }
 
-class _RecipesState extends State<Recipes> {
+class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<RecipeProvider>(context);
-    List<Recipe> recipes = provider.recipes;
+    final provider = Provider.of<CategoryProvider>(context);
+    List<Category> categories = provider.categories;
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: Text('Toutes les recettes'),
-        backgroundColor: Color(0xFFEE8B60),
-      ),
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: Row(children: <Widget>[
+            Image.asset(
+              'assets/images/logo_cube_web_mobile.png',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            )
+          ]),
+          backgroundColor: Color(0xFFEE8B60)),
       body: ListView.builder(
-        itemCount: recipes.length,
+        itemCount: categories.length,
         itemBuilder: (context, index) {
-          Recipe recipe = recipes[index];
+          Category category = categories[index];
           return ListTile(
-            title: Text('\$' + recipe.name),
+            title: Text(category.type),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(recipe.publishedTime),
-                Text(recipe.description),
-              ]),
               IconButton(
-                color: Color(0xFFEE8B60),
                 icon: Icon(Icons.edit),
                 onPressed: () {
                   showModalBottomSheet(
                       isScrollControlled: true,
                       context: context,
                       builder: (BuildContext context) {
-                        return RecipeEdit(recipe, provider.updateRecipe);
+                        return CategoryEdit(category, provider.updateCategory);
                       });
                 },
               ),
               IconButton(
-                color: Color(0xFFEE8B60),
                 icon: Icon(Icons.delete),
                 onPressed: () {
                   showDialog(
@@ -55,8 +55,7 @@ class _RecipesState extends State<Recipes> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: Text("Confirmation"),
-                          content: Text(
-                              "Voulez vous vraiment supprimer ce contenu?"),
+                          content: Text("Voulez vous supprimer ce contenu ?"),
                           actions: [
                             TextButton(
                               child: Text("Annuler"),
@@ -64,8 +63,8 @@ class _RecipesState extends State<Recipes> {
                             ),
                             TextButton(
                                 child: Text("Supprimer"),
-                                onPressed: () => deleteRecipe(
-                                    provider.deleteRecipe, recipe, context)),
+                                onPressed: () => deleteCategory(
+                                    provider.deleteCategory, category)),
                           ],
                         );
                       });
@@ -81,7 +80,7 @@ class _RecipesState extends State<Recipes> {
                 isScrollControlled: true,
                 context: context,
                 builder: (BuildContext context) {
-                  return RecipeAdd(provider.addRecipe);
+                  return CategoryAdd(provider.addCategory);
                 });
           },
           backgroundColor: Color(0xFFEE8B60),
@@ -89,9 +88,8 @@ class _RecipesState extends State<Recipes> {
     );
   }
 
-  Future deleteRecipe(
-      Function callback, Recipe recipe, BuildContext context) async {
-    await callback(recipe);
+  Future deleteCategory(Function callback, Category category) async {
+    await callback(category);
     Navigator.pop(context);
   }
 }

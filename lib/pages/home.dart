@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../providers/AuthProvider.dart';
 import '../pages/categories.dart';
+import '../pages/menu.dart';
 import '../pages/recipes.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +12,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int selectedIndex = 0;
-  List<Widget> widgetOptions = [Recipes(), Categories()];
+  List<Widget> widgetOptions = [Menu(), Recipes(), Categories()];
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +31,7 @@ class _HomeState extends State<Home> {
                   icon: Icon(Icons.account_balance_wallet),
                   label: 'Toutes les recettes'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.account_balance_wallet),
-                  label: 'Recette au hasard'),
+                  icon: Icon(Icons.account_box), label: 'Recette au hasard'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.category), label: 'Categories'),
               BottomNavigationBarItem(
@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> onItemTapped(int index) async {
-    if (index == 2) {
+    if (index == 3) {
       final AuthProvider provider =
           Provider.of<AuthProvider>(context, listen: false);
 

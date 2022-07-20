@@ -12,7 +12,7 @@ class ApiService {
     this.token = token;
   }
 
-  final String baseUrl = '';
+  final String baseUrl = 'http://flutter-api.laraveldaily.com/api/';
 
   Future<List<Category>> fetchCategories() async {
     http.Response response = await http.get(
@@ -156,7 +156,7 @@ class ApiService {
 
   Future<String> register(String name, String email, String password,
       String passwordConfirm, String deviceName) async {
-    String uri = baseUrl + 'auth/register';
+    String uri = 'http://flutter-api.laraveldaily.com/api/auth/register';
 
     http.Response response = await http.post(Uri.parse(uri),
         headers: {
@@ -188,7 +188,7 @@ class ApiService {
   }
 
   Future<String> login(String email, String password, String deviceName) async {
-    String uri = baseUrl + 'auth/login';
+    String uri = 'http://flutter-api.laraveldaily.com/api/auth/login';
 
     http.Response response = await http.post(Uri.parse(uri),
         headers: {
