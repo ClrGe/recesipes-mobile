@@ -27,7 +27,11 @@ class _HomeState extends State<Home> {
             elevation: 0,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.account_balance_wallet), label: 'Recipes'),
+                  icon: Icon(Icons.account_balance_wallet),
+                  label: 'Toutes les recettes'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.account_balance_wallet),
+                  label: 'Recette au hasard'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.category), label: 'Categories'),
               BottomNavigationBarItem(

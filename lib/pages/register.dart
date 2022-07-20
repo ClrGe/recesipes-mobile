@@ -56,14 +56,14 @@ class _RegisterState extends State<Register> {
                         controller: nameController,
                         validator: (String? value) {
                           if (value!.isEmpty) {
-                            return 'Enter name';
+                            return 'Votre nom';
                           }
 
                           return null;
                         },
                         onChanged: (text) => setState(() => errorMessage = ''),
                         decoration: InputDecoration(
-                          labelText: 'Name',
+                          labelText: 'Nom',
                         ),
                       ),
                       TextFormField(
@@ -71,7 +71,7 @@ class _RegisterState extends State<Register> {
                         controller: emailController,
                         validator: (String? value) {
                           if (value!.isEmpty) {
-                            return 'Enter email';
+                            return 'Votre email';
                           }
 
                           return null;
@@ -88,7 +88,7 @@ class _RegisterState extends State<Register> {
                         controller: passwordController,
                         validator: (String? value) {
                           if (value!.isEmpty) {
-                            return 'Enter password';
+                            return 'Votre mot de passe';
                           }
 
                           return null;
@@ -103,18 +103,18 @@ class _RegisterState extends State<Register> {
                         controller: passwordConfirmController,
                         validator: (String? value) {
                           if (value!.isEmpty) {
-                            return 'Repeat password';
+                            return 'Confirmer le mot de passe';
                           }
 
                           return null;
                         },
                         onChanged: (text) => setState(() => errorMessage = ''),
-                        decoration:
-                            InputDecoration(labelText: 'Confirm Password'),
+                        decoration: InputDecoration(
+                            labelText: 'Confirmer le mot de passe'),
                       ),
                       ElevatedButton(
                         onPressed: () => submit(),
-                        child: Text('Register'),
+                        child: Text('Inscription'),
                         style: ElevatedButton.styleFrom(
                             primary: Color(0xFFEE8B60),
                             onPrimary: Colors.white,
@@ -127,7 +127,7 @@ class _RegisterState extends State<Register> {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Text('<- Back to Login',
+                          child: Text('<- Déjà inscrit ?',
                               style: TextStyle(fontSize: 14)),
                         ),
                       ),

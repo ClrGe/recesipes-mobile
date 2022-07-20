@@ -16,7 +16,7 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  String? deviceName;
+  late String deviceName;
   String errorMessage = '';
 
   @override
@@ -118,7 +118,7 @@ class _LoginState extends State<Login> {
         Provider.of<AuthProvider>(context, listen: false);
     try {
       await provider.login(
-          emailController.text, passwordController.text, deviceName!);
+          emailController.text, passwordController.text, deviceName);
     } catch (Exception) {
       setState(() {
         errorMessage = Exception.toString().replaceAll('Exception: ', '');

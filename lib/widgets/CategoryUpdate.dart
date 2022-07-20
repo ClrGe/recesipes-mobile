@@ -34,7 +34,7 @@ class _CategoryEditState extends State<CategoryEdit> {
                 controller: categoryNameController,
                 validator: (String? value) {
                   if (value!.isEmpty) {
-                    return 'Renseignez le nom de catégorie';
+                    return 'Renseignez le nom de la catégorie';
                   }
 
                   return null;
