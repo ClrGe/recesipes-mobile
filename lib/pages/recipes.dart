@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recesipes_app/pages/PhotoPicker.dart';
+import 'package:recesipes_app/pages/recipeDetails.dart';
 import '../models/recipe.dart';
 import '../widgets/RecipeCreate.dart';
 import '../widgets/RecipeUpdate.dart';
@@ -22,56 +24,51 @@ class _RecipesState extends State<Recipes> {
         centerTitle: true,
         title: Text('Toutes les recettes'),
         backgroundColor: Color(0xFFEE8B60),
+        actions: [
+          Padding(padding: EdgeInsets.only(right: 20.0),
+          child: GestureDetector(
+            child: Icon(Icons.camera_alt),
+            onTap: () { Navigator.push(context, MaterialPageRoute(
+              builder: (context) => PhotoPicker(),
+            )); },
+          ))
+        ],
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: recipes.length,
+        separatorBuilder: (context, index) {
+          return const Divider(
+            color: Colors.black,
+          );
+        },
         itemBuilder: (context, index) {
           Recipe recipe = recipes[index];
-          return ListTile(
-            title: Text('\$' + recipe.name),
-            trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(recipe.publishedTime),
-                Text(recipe.description),
-              ]),
-              IconButton(
-                color: Color(0xFFEE8B60),
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return RecipeEdit(recipe, provider.updateRecipe);
-                      });
-                },
+          return GestureDetector(
+            onTap: () { Navigator.push(context, MaterialPageRoute(
+              builder: (context) => RecipeDetails(recipe: recipe,),
+            ),); },
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(recipe.name,
+                          style: TextStyle(fontSize: 40),
+                        ),
+                        Text(recipe.description, style: TextStyle(fontSize: 10)),
+                        Text('${recipe.pricing} | ${recipe.difficulty}', style: TextStyle(fontSize: 20)),
+                      ],
+                    ),
+
+                  ],
+                ),
               ),
-              IconButton(
-                color: Color(0xFFEE8B60),
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Confirmation"),
-                          content: Text(
-                              "Voulez vous vraiment supprimer ce contenu?"),
-                          actions: [
-                            TextButton(
-                              child: Text("Annuler"),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                            TextButton(
-                                child: Text("Supprimer"),
-                                onPressed: () => deleteRecipe(
-                                    provider.deleteRecipe, recipe, context)),
-                          ],
-                        );
-                      });
-                },
-              )
-            ]),
+            )
           );
         },
       ),
