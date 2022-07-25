@@ -55,4 +55,14 @@ class RecipeProvider extends ChangeNotifier {
       await authProvider.logOut();
     }
   }
+
+  Future<Recipe?> fetchRecipe(int id) async{
+    try {
+      notifyListeners();
+      return await apiService.fetchRecipe(id);
+    } catch (Exception){
+      await authProvider.logOut();
+    }
+    return null;
+  }
 }

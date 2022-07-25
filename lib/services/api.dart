@@ -12,7 +12,7 @@ class ApiService {
     this.token = token;
   }
 
-  final String baseUrl = 'http://flutter-api.laraveldaily.com/api/';
+  final String baseUrl = 'http://13.36.182.251/api/';
 
   Future<List<Category>> fetchCategories() async {
     http.Response response = await http.get(
@@ -80,6 +80,7 @@ class ApiService {
   }
 
   Future<List<Recipe>> fetchRecipes() async {
+    token = "lQGpNGX4Ted2xPXbcnviRVwn6H0NxOSAnj3u7m4GN0HfKmCFyRB4kEXwLqNMHR9LpgRPwfQEwxMKtIji";
     http.Response response = await http.get(
       Uri.parse(baseUrl + 'recipes'),
       headers: {
@@ -91,6 +92,21 @@ class ApiService {
     List recipes = jsonDecode(response.body);
 
     return recipes.map((recipe) => Recipe.fromJson(recipe)).toList();
+  }
+
+  Future<Recipe> fetchRecipe(int id) async {
+    token = "lQGpNGX4Ted2xPXbcnviRVwn6H0NxOSAnj3u7m4GN0HfKmCFyRB4kEXwLqNMHR9LpgRPwfQEwxMKtIji";
+    http.Response response = await http.get(
+      Uri.parse(baseUrl + 'recipes/$id'),
+      headers: {
+        HttpHeaders.acceptHeader: 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer $token'
+      },
+    );
+
+    Recipe recipe = jsonDecode(response.body);
+
+    return recipe;
   }
 
   Future<Recipe> addRecipe(

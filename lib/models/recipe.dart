@@ -2,15 +2,14 @@ class Recipe {
   int id;
   int userId;
   int guestsNumber;
-  String steps;
   String description;
   String name;
   String pricing;
   String categoryId;
   String difficulty;
-  String cookDuration;
-  String preparationDuration;
-  String restingDuration;
+  int cookDuration;
+  int preparationDuration;
+  int restingDuration;
   String publishedTime;
 
   Recipe({
@@ -18,7 +17,6 @@ class Recipe {
     required this.name,
     required this.guestsNumber,
     required this.description,
-    required this.steps,
     required this.difficulty,
     required this.pricing,
     required this.categoryId,
@@ -35,14 +33,13 @@ class Recipe {
       name: json['name'],
       guestsNumber: json['guest_number'],
       description: json['description'],
-      steps: json['steps'],
       difficulty: json['difficulty'],
       pricing: json['price_range'],
-      categoryId: json['category_id'],
+      categoryId: '${json['category_id']}',
       cookDuration: json['cook_duration'],
       preparationDuration: json['preparation_duration'],
       restingDuration: json['resting_duration'],
-      publishedTime: json['published_time'],
+      publishedTime: '${json['published_time']}',
       userId: json['user_id'],
     );
   }

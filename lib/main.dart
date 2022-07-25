@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
                 ChangeNotifierProvider<RecipeProvider>(
                     create: (context) => RecipeProvider(authProvider))
               ],
-              child: MaterialApp(title: 'Bienvenue sur reCESIpes', routes: {
+              child: MaterialApp(debugShowCheckedModeBanner: false,title: 'Bienvenue sur reCESIpes', routes: {
                 '/': (context) {
                   final authProvider = Provider.of<AuthProvider>(context);
                   if (authProvider.isAuthenticated) {
